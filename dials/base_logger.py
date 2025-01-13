@@ -78,7 +78,7 @@ if sys.platform in ["linux", "linux2"]:
 
 # MacOS
 elif sys.platform == "darwin":
-    logFile = f'~/Library/Logs/KaranovicResearch/vudials/server.log'
+    logFile = os.path.expanduser('~/Library/Logs/KaranovicResearch/vudials/server.log')
 
 # Windows
 elif sys.platform == "win32":

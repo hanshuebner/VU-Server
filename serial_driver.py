@@ -141,7 +141,7 @@ class SerialHardware(object):
             return []
         return False
 
-    def read_until_response(self, timeout=5):
+    def read_until_response(self, timeout=.1):
         rx_lines = []
 
         timeout_timestmap = time.time() + timeout
