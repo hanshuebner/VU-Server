@@ -1,0 +1,18 @@
+[Unit]
+Description=Load Average TCP Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/hans/loadavg-server.py
+Restart=always
+User=hans
+Group=hans
+WorkingDirectory=/home/hans
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=journal
+StandardError=journal
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+
