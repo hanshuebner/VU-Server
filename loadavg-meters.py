@@ -12,6 +12,7 @@ KEY = 'cTpAWYuRpA2zx75Yh961Cg'
 DIAL_1_MIN = '35002A000650564139323920'
 DIAL_5_MIN = '1F003C000650564139323920'
 DIAL_15_MIN = '800031000650564139323920'
+DIAL_DISK_SPACE = '930042000650564139323920'
 
 def send_dial_request(dial_id, value):
     """Send an HTTP GET request to set the dial value."""
@@ -51,22 +52,25 @@ def send_backlight_request(dial_id, load_value):
 def process_load_avg(load_avg):
     """Process the load averages and send requests to the meter server."""
     load_avg = load_avg.strip().split()
-    if len(load_avg) >= 3:
+    if len(load_avg) >= 4:
         try:
             # Convert the load averages to percentages (multiply by 10)
             load_1m = float(load_avg[0]) * 10
             load_5m = float(load_avg[1]) * 10
             load_15m = float(load_avg[2]) * 10
+            disk_space = float(load_avg[3])
 
             # Send requests to set the dials
             send_dial_request(DIAL_1_MIN, load_1m)
             send_dial_request(DIAL_5_MIN, load_5m)
             send_dial_request(DIAL_15_MIN, load_15m)
+            send_dial_request(DIAL_DISK_SPACE, disk_space)
 
             # Send requests to set the backlights based on load values
             send_backlight_request(DIAL_1_MIN, load_1m)
             send_backlight_request(DIAL_5_MIN, load_5m)
             send_backlight_request(DIAL_15_MIN, load_15m)
+            send_backlight_request(DIAL_DISK_SPACE, disk_space)
 
         except ValueError:
             print("Error: Invalid load average values received.")
